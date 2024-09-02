@@ -33,8 +33,12 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 
 #### Links to my favourite coding learning sites that I find helpful:
 <a href="https://www.w3schools.com/">W3schools</a>
-<a href="https://mimo.org/">Mimo"</a> ( The app version is great for on the go )
 
+<a href="https://mimo.org/">Mimo</a> ( The app version is great for on the go )
+
+<a href="https://www.freecodecamp.org/">Free Codecamp</a>
+
+<a href="https://www.theodinproject.com/">The Odin Project</a> 
 
   
 
