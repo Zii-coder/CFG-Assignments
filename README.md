@@ -48,3 +48,17 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 |--------------|----------------------------------------------|---------------------------------|
 | Project 1    | Creating Github account and showing good use | Github , Pycharm                |
 | Project 2    |                                              |
+
+
+
+
+
+
+
+## Explanation of `.gitignore` and `requirements.txt`
+
+- **gitignore**: The git ignore file tells Git which files and directories to ignore in your repository. This is useful for excluding temporary files, build artifacts, and sensitive data.
+
+- **requirements.txt**:The requirements.txt file is used to list Python dependencies for a project. It allows others to install the same dependencies using pip.
+  
+
