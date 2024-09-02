@@ -62,6 +62,11 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 - **requirements.txt**:The requirements.txt file is used to list Python dependencies for a project. It allows others to install the same dependencies using pip.
 
   ### PDF FILES OF EACH STEP OF THE ASSIGNMENT:
+  [CFGAssignment 1 images (Zenzi Ma) copy.pdf](https://github.com/user-attachments/files/16841294/CFGAssignment.1.images.Zenzi.Ma.copy.pdf)
+
+  [creating git.ignore and requirements (Zenzi Ma).pdf](https://github.com/user-attachments/files/16841299/creating.git.ignore.and.requirements.Zenzi.Ma.pdf)
+
+
 
 
 
