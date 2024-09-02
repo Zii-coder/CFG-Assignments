@@ -60,5 +60,8 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 - **gitignore**: The git ignore file tells Git which files and directories to ignore in your repository. This is useful for excluding temporary files, build artifacts, and sensitive data.
 
 - **requirements.txt**:The requirements.txt file is used to list Python dependencies for a project. It allows others to install the same dependencies using pip.
-  
+
+  ### PDF FILES OF EACH STEP OF THE ASSIGNMENT:
+
+
 
