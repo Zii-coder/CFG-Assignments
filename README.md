@@ -5,7 +5,7 @@ Hi, I'm Zenzi a student at CFG.This repositorty will be used for all my assignme
   I am **passionate** about new technologies and _eager_ to collaborate
 
   ### Facts about me :
-  * I love **everything** health <sup> Herbs, mental health, womens health </sup> 
+  * I love **everything** health <sup> Herbs, mental health, womens health </sup> 🌿
   * I may learn about a new conspiracry theory every now and then
   * I am very creative! I am good with fine art, textiles and grpahic design
   * I worked in a school for a year
@@ -21,8 +21,9 @@ Hi, I'm Zenzi a student at CFG.This repositorty will be used for all my assignme
 
   
   #### My current skills:
-  - Programming Language: Python, <sub> Javascript (most challenging) </sub> , HTML , CSS, SQL 
+- Programming Language: Python, <sub> Javascript (most challenging) </sub> , HTML , CSS, SQL 
 - Tools: Git, Github , PYcharm, VScode
+  
 🎨 - Design tools: Adobe , Figma ,  Canva , Miro
 
 #### Images that show a bit about me: 
@@ -41,4 +42,9 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 <a href="https://www.theodinproject.com/">The Odin Project</a> 
 
   
+## Projects Overview
 
+| Project Name | Description                                  | Technologies Used               |
+|--------------|----------------------------------------------|---------------------------------|
+| Project 1    | Creating Github account and showing good use | Github , Pycharm                |
+| Project 2    |                                              |
