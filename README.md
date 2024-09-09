@@ -7,7 +7,7 @@ Hi, I'm Zenzi a student at CFG.This repositorty will be used for all my assignme
   ### Facts about me :
   * I love **everything** health <sup> Herbs, mental health, womens health </sup> 🌿
   * I may learn about a new conspiracry theory every now and then
-  * I am very creative! I am good with fine art, textiles and grpahic design
+  * I am very creative! I am good with fine art, textiles and graphic design
   * I worked in a school for a year
   * I love to travel and learn about new cultures ~even though I am afraid of heights~
 
