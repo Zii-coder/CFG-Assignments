@@ -1,0 +1,315 @@
+-- Author: Zenzi Mansaray 
+-- Assignment 3: SQL Database Project 
+-- Description: This script creates a databse to studying illiness in children at a specific clinic.
+-- Healthy Horizons Peadiatric clinic 
+
+-- 1.Schema  
+CREATE SCHEMA HealthHorizonsClinic;
+USE HealthHorizonsClinic;
+
+-- 2.Create tables
+-- Create children table to store children details
+CREATE TABLE Children (
+child_id INT PRIMARY KEY,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50) NOT NULL,
+age INT CHECK (age > 0 AND age <= 18), -- Make sure children between 0 and 18 years
+gender VARCHAR(10),
+date_of_birth DATE,
+contact_info VARCHAR(20) CHECK (contact_info LIKE '+44 %') -- Ensures uk phone number format
+);
+
+-- Create the Doctors table 
+CREATE TABLE Doctors (
+doctor_id INT PRIMARY KEY,
+first_name VARCHAR(50) NOT NULL,
+last_name VARCHAR(50),
+specialty VARCHAR(100),
+contact_info VARCHAR(15) CHECK (contact_info LIKE '+44 %'), -- Ensures uk phone number format
+UNIQUE (first_name, last_name)  -- Ensure no two doctors have the same name 
+);
+
+
+-- Create the Health conditions table 
+CREATE TABLE Health_Conditions (
+condition_id INT PRIMARY key,
+child_id INT,
+condition_name VARCHAR(100) NOT NULL,
+diagnosis_date DATE NOT NULL,
+severity VARCHAR(10) CHECK (severity IN ('Mild', 'Moderate', 'Severe')),
+FOREIGN KEY (child_id) REFERENCES Children(child_id) -- Links each health condition to a child 
+);
+
+-- Create the Appointments  table to store appointment details 
+CREATE TABLE Appointments (
+appointment_id INT PRIMARY KEY,
+child_id INT,
+doctor_id INT,
+appointment_date DATE NOT NULL,
+appointment_time TIME NOT NULL,
+reason VARCHAR(100) NOT NULL,
+FOREIGN KEY (child_id) REFERENCES Children(child_id), -- Links appointment to a child
+FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id), -- Links appointment to a doctor 
+UNIQUE (child_id, doctor_id, appointment_date) -- Ensures no duplicate appointments for the same child,doctor and date 
+);
+
+
+-- Create the Prescriptions table to store prescription details
+CREATE TABLE Prescriptions (
+prescriptions_id INT PRIMARY KEY,
+child_id INT,
+doctor_id INT,
+condition_id INT,
+medication_name VARCHAR(100) NOT NULL,
+dosage VARCHAR(50) NOT NULL,
+start_date DATE,
+end_date DATE CHECK (start_date <=end_date), -- Ensures prescription start date is before or equal to end date 
+FOREIGN KEY (child_id) REFERENCES Children(child_id), -- Links prescription to a child
+FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id), -- Links prescription to a doctor
+FOREIGN KEY (condition_id) REFERENCES Health_conditions(condition_id) -- Links prescription to a health condition
+);
+ 
+
+-- Create Referrals tabel to store referral details 
+CREATE TABLE Referrals (
+referral_id INT PRIMARY KEY,
+child_id INT,
+referral_date DATE NOT NULL,
+hospital_name VARCHAR(100),
+specialist_name VARCHAR(100),
+reason_for_referral VARCHAR(200),
+doctor_id INT, -- The doctor authorizing the referral
+FOREIGN KEY (child_id) REFERENCES Children(child_id), -- Links referral to child 
+FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id) -- Links referral to a doctor 
+);
+
+-- 3. Indexing for performance improvement
+-- Create indexes to improve search performance on frequently queried columns
+CREATE INDEX idx_children_age ON Children(age);
+CREATE INDEX idx_doctors_specialty ON Doctors(specialty);
+CREATE INDEX idx_appointments_date ON Appointments(appointment_date);
+CREATE INDEX idx_health_conditions_child ON Health_Conditions(child_id);
+
+
+-- 4. Insert Data
+INSERT INTO Children (child_id, first_name, last_name, age, gender, date_of_birth, contact_information)
+VALUES 
+(1001, 'Amisha', 'Ali', 15, 'Female', '2009-09-05', '+44 7712 345678'),
+(1002, 'Lydia', 'Johnson', 8, 'Female', '2015-07-08', '+44 7713 456789'),
+(1003, 'Theo', 'Sekati', 12, 'Male', '2011-05-01', '+44 7714 567890'),
+(1004, 'Ava', 'Sesay', 4, 'Female', '2020-03-01', '+44 7715 678901'),
+(1005, 'Samuel', 'Kanu', 13, 'Male', '2011-05-12', '+44 7716 789012'),
+(1006, 'Samantha', 'Raji', 12, 'Female', '2011-12-09', '+44 7717 890123'),
+(1007, 'Samuel', 'Harding', 10, 'Male','2013-10-12', '+44 7718 901234'),
+(1008, 'Toni', 'Morgan-cole', 12, 'Female', '2012-09-15','+44 7720 123456'),
+(1009, 'Winter', 'Dawit', 9, 'Female', '2015-03-27', '+44 7721 234567' ),
+(1010, 'Azari', 'Williams', 15, 'Female', '2009-12-31', '+44 7722 345678'),
+(1011, 'Luke', 'Harrison', 7, 'Male', '2017-07-14', '+44 7723 456789'),
+(1012, 'Dantae', 'Addo', 4, 'Male', '2020-02-27', '+44 7724 567890'),
+(1013, 'Tessani', 'Williams', 18,'Female', '2006-11-17', '+44 7725 678901'),
+(1014, 'Adam', 'Dubois', 2, 'Male', '2022-06-18', '+44 7726 789012'),
+(1015, 'Annabelle', 'Frost', 4, 'Female', '2020-04-02', '+44 7727 890123' ),
+(1016, 'Eric', 'Lopez', 5, 'Male', '2019-05-08', '+44 7728 901234'),
+(1017, 'James', 'Tanaka', 14, 'Male', '2010-10-23', '+44 7729 123456'),
+(1018, 'Serya', 'Adonis', 3, 'Female', '2021-03-16', '+44 7730 234567'),
+(1019, 'Kyle', 'Mitchell', 16, 'Male', '2008-04-17', '+44 7731 345678'),
+(1020, 'Cassandra', 'Akbar', 11, 'Female', '2013-06-10', '+44 7732 456789');
+
+INSERT INTO Doctors (doctor_id, first_name, last_name, specialty, contact_info)
+VALUES
+(5001, 'Yamal', 'Aziz', 'Peadiatric General Practice', '+44 203 123 4567'),
+(5002, 'Jeneba', 'Peters', 'Chronic Disease Managment', '+44 203 234 5678'),
+(5003, 'Marcia', 'Castro', 'Family Medicine', '+44 203 345 6789'),
+(5004, 'John', 'Hamilton', 'Peadactric Palliative Care', '+44 203 456 7890'),
+(5005, 'Guy', 'Klein', 'Genaral Practice', '+44 203 678 9012'),
+(5006, 'Lydia', 'Kuto', 'General Practice', '+44 203 678 9113'),
+(5007, 'Joseph', 'Keita', 'Peadiactric General', '+44 203 789 0123'),
+(5008, 'Malik', 'Jones', 'Childhood Dermatology', '+44 203 890 1234'),
+(5009, 'Christina', 'Cole', 'Peadiactric Endocrinologist', '+44 203 901 2345'),
+(5010, 'Victoria', 'Taylor', 'Family Medicine', '+44 204 012 3456');
+
+-- Inserting health condition data into the Health_Conditions table for various children
+-- Each child can have one or more health conditions
+-- The condition_id is unique for each health condition entry (primary key)
+-- child_id links to the respective child in the Children table (foreign key)
+
+INSERT INTO Health_Conditions (condition_id, child_id, condition_name, diagnosis_date, severity)
+VALUES
+(1, 1001, 'Asthma', '2021-06-12', 'Moderate'),
+(2, 1001, 'Eczema', '2020-09-12', 'Mild'),
+(3, 1002, 'Type 1 Diabetes', '2022-01-15', 'Severe'),
+(4, 1002, 'Anxiety Disorder', '2021-03-21', 'Moderate'),
+(5, 1003, 'ADHD', '2018-11-30', 'Mild'),
+(6, 1005, 'Asthma', '2019-08-15', 'Mild'),
+(7, 1005, 'Peanut Allergy', '2017-02-28', 'Severe'),
+(8, 1009, 'Ear Infection', '2024-08-29', 'Mild'),
+(9, 1010, 'Sinus Infection', '2024-09-18', 'Moderate'),
+(10, 1011, 'Tonsillitis', '2024-09-01', 'Moderate'),
+(11, 1012, 'Sickle Cell Anmeia', '2023-03-20', 'Severe'),
+(12, 1013, 'PCOS', '2022-01-05', 'Moderate'),
+(13, 1013, 'Vitamin Defficencies', '2024-03-13', 'Moderate'),
+(14, 1014, 'Common Cold', '2024-09-05', 'Mild'),
+(15, 1015, 'Food Poisoning', '2024-09-19', 'Moderate'),
+(16, 1016, 'Autsim', '2024-06-27', 'Mild'),
+(17, 1017, 'Hemorrhoids', '2024-09-16', 'Moderate'),
+(18, 1018, 'Ear Infection', '2024-09-02', 'Mild'),
+(19, 1019, 'Epilepsy', '2013-05-14', 'Severe'),
+(20, 1020, 'Anxiety Disorder', '2023-08-22', 'Moderate'),
+(21, 1020, 'Sickle Cell Anmeia', '2017-06-12', 'Severe');
+
+
+INSERT INTO Appointments (appointment_id, child_id, doctor_id, appointment_date, appointment_time, reason)
+VALUES
+(001, 1001, 5001, '2024-10-15', '09:30', 'Skin check-up'),
+(002, 1001, 5001, '2024-10-15', '11:00', 'Asthma follow-up'),
+(003, 1002, 5002, '2024-10-04', '14:00', 'Management and depression consultation'),
+(005, 1005, 5001, '2024-10-07', '10:00', 'Asthma follow up'),
+(006, 1005, 5007, '2024-10-09', '15:35', 'Testing for any new allergies'),
+(007, 1007, 5003, '2024-10-10', '12:00', 'General check-up'),
+(008, 1009, 5008, '2024-10-11', '16:00', 'Ear infection consultation'),
+(009, 1011, 5005, '2024-10-15', '13:45', 'ENT check-up for tonsillitis'),
+(010, 1012, 5001, '2024-10-16', '10:30', 'Sickle Cell managment and check up'),
+(011, 1013, 5009, '2024-10-17', '17:10', 'Hormonal assesment PCOS / sympton checks'),
+(012, 1006, 5001, '2024-10-18', '16:00', 'Common Cold consultation'),
+(013, 1015, 5004, '2024-10-21', '15:00', 'Follow-up after food poisoning'),
+(014, 1016, 5002, '2024-10-22', '14:30', 'Autism development check-up'),
+(015, 1017, 5001, '2024-10-07', '13:00', 'Hemorrhoid consultation'),
+(016, 1018, 5006, '2024-10-24', '10:45', 'Ear infection check-up'),
+(017, 1019, 5007, '2024-10-24', '09:15', 'Epilepsy managment consultation'),
+(018, 1020, 5009, '2024-10-28', '12:30', 'Sickle Cell anemia consultaion'),
+(019, 1001, 5006, '2024-10-28', '11:20', 'Asthma follow-up'),
+(020, 1004, 5003, '2024-10-30', '18:10', 'Routine general check-up ');
+
+
+INSERT INTO Prescriptions (prescriptions_id, child_id, doctor_id, condition_id, medication_name, dosage, start_date, end_date)
+VALUES 
+(901, 1001, 5001, 1, 'Salbutamol Inhaler', '2 puffs every 4 hours as needed', '2024-10-15', 'For life'),
+(902, 1001, 5001, 2, 'Hydrocortisone Cream', 'Apply thin layer twice daily', '2024-10-15', 'For life'),
+(903, 1002, 5003, 3, 'Insulin Glargine', '10 units daily', '2024-10-04', '2024-12-31'),
+(904 ,1002, 5003, 4, 'Fluoxetine', '10mg once daily', '2024-10-04', '2024-11-23'),
+(905, 1005, 5001, 6, 'Montelukast', '5mg chewable tablet once daily', '2024-08-15', '2025-08-15'),
+(906, 1005, 5007, 7, 'Epinephrine Auto-Injector', '0.3mg injection as needed', '2024-10-09', 'For life'),
+(907, 1009, 5008, 8, 'Amoxicillin', '250mg three times daily for 7 days', '2024-10-11', '2024-10-18'),
+(918, 1010, 5008, 9, 'Fluticasone Nasal Spray', '1 spray per nostril daily', '2024-09-18' '2024-10-18'),
+(909, 1011, 5005, 10, 'Penicillin V', '500mg twice daily for 10 days', '2024-10-15', '2024-10-25'),
+(911, 1012, 5001, 11, 'Hydroxyurea', '500mg once daily', '2024-10-16', 'For life'), 
+(912, 1013, 5009, 12, 'Myo-inositol folate complex', '500mg twice daily', '2024-09-05', 'For life'),
+(913, 1014, 5003, 14, 'Paracetamol', '250mg every 6 hours as needed', '2024-09-05', '2024-09-19'),
+(914, 1015, 5004, 15, 'Ondansetron', '4mg every 8 hours as needed', '2024-09-19',  '2024-09-23'),
+(915, 1016, 5002, 16, 'Risperidone', '0.5mg once daily', '2024-06-27', '2025-06-27'),
+(916, 1017, 5001, 17, 'Hydrocortisone Cream', 'Apply to affected area twice daily', '2024-16-09', '2024-10-16'),
+(917, 1019, 5007, 19, 'Levetiracetam', '500mg twice daily', '2024-05-14', '2024-05-2024'),
+(918, 1020, 5009, 21, 'Hydroxyurea', '500mg once daily', '2023-08-22', '2024-08-22');
+
+INSERT INTO Referrals (referral_id, child_id, referral_date, hospital_name, Specialist_name, reason_for_referral, doctor_id)
+VALUES
+(30001, 1001, '2024-11-01', 'Bright horizons Childrens Hospital', 'Dr. Emily Freah','Specialist asthma care due to worsening symptoms', 5001),
+(30002,  1002, '2024-10-10', 'Sunrise Peadiatric Centre', 'Dr.Sarah Wallie', 'Endocrinology consultation for comolex Diabetes managment', 5002),
+(30003, 1003, '2024-10-10', 'Willow Creek Mental Health Centre', 'Dr. Daniel Smith', 'Specialist ADHD evaluation and treatment recommendations', 5004),
+(30004, 1005, '2024-10-15', 'Harborview Allergy Clinic', 'Harborview Allergy Clinic', 'Dr.John Evans', 'Referral to allergy specialist for severe peanut allergy', 5003),
+(30005, 1009, '2024-10-20', 'Pinehill Ear, Nose & Throat Clinic', 'Dr. Jessica Wang', 'ENT specialist for recurring ear infections', 5008),
+(30006, 1011, '2024-10-25', 'Harborview Childrens ENT Hospital', 'Dr. Jason Greene', 'ENT consultation for tonsillitis surgery due to recurrent episodes', 5005),
+(30007, 1012, '2024-10-25', 'Bright Horizons Childrens Hospital', 'Dr.James Rogers', 'Advanced sickle cell managment and transfusion recommendation', 5001),
+(30008, 1013, '2024-10-30', 'Sunshine Paediatric Endocrine Clinic', 'Dr. Linda Marshall', 'Ultra sound to check for cysts on ovaries', 5009),
+(30009, 1015, '2024-10-25', 'Sunshine Gastroenterology Clinic', 'Dr. Michael Bhat', 'Gastroenterology specialist for post-food poisoning evaluation', 5004),
+(30010, 1019, '2024-10-31', 'Bright Horizons Neurology Centre', 'Dr. Rachel Gibson', 'Neurology referral complex epilepsy management', 5007);
+
+
+-- 5. Triggers for automatic actions 
+-- Trigger to log any chnages in the Health_Conditions table
+
+DELIMITER $$
+CREATE TRIGGER log_health_conditions_update
+AFTER UPDATE ON Health_Conditions
+FOR EACH ROW
+BEGIN
+   INSERT INTO Health_Conditions_Log (condition_id, child_id, old_condition_name, new_condition_name, change_date)
+   VALUES (OLD.condition_id, OLD.child_id, OLD.condition_name, NEW.condition_name, NOW());
+END$$
+DELIMITER ;
+
+-- 6. Strored Procedures
+-- Stored procedure for adding an appointment
+DELIMITER $$
+CREATE PROCEDURE AddAppointment (
+IN p_child_id INT,
+IN p_doctor_id INT,
+IN p_appointment_date DATE,
+IN p_appointment_time TIME,
+IN p_reason VARCHAR(100)
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle expections, could roll back or log error
+        ROLLBACK;
+    END;
+    
+	START TRANSACTION;
+	INSERT INTO Appointments (child_id, doctor_id, appointment_date, appointment_time, p_reason)
+    VALUES (p_child_id, p_doctor_id, p_appointment_date, p_appointment_time, p_reason);
+	COMMIT;
+END$$
+DELIMITER ;
+
+-- 7. Queries
+
+-- Returns all records from the Children table.
+SELECT * FROM Children;
+
+-- Return all records from the Doctors table
+SELECT * FROM Doctors;
+
+-- Return Children with a particular health condition
+SELECT c.first_name, c.last_name, h.condition_name
+FROM Children c
+JOIN Health_Conditions h ON c.child_id = h.child_id
+WHERE h.condition_name IN ('Asthma', 'Sickle Cell Anemia');
+
+-- Retrieve all appointments by a specific doctor 
+SELECT a.appointment_id, d.first_name, d.last_name, c.first_name AS child_first_name, a.appointment_date
+FROM Appointments a 
+JOIN Doctors ON a.doctor_id = d.doctor_id
+JOIN Children c ON a.child_id = c.child_id
+WHERE d.first_name = 'Jeneba' AND d.last_name = 'Peters';
+
+-- Find all children younger than a specific age
+SELECT * FROM Children WHERE age < 10;
+
+-- Count the number of appointments for each child
+SELECT c.first_name, c.last_name, COUNT(a.appointment_id) AS total_appointments
+FROM Children c 
+JOIN Appointments a ON c.child_id = a.child_id
+GROUP BY c.first_name, c.last_name;
+
+-- Count how many appointments each doctor has 
+SELECT d.first_name, d.last_name, COUNT(a.appointment_id) AS total_appointments
+FROM Doctors d
+JOIN Appointments a ON d.doctor_id = a.doctor_id
+GROUP BY d.first_name, d.last_name;
+
+-- Retrieve all appointments for a given date
+SELECT * FROM Appointments WHERE appointment_date = '2024-10-15';
+
+-- List children that have more than one illness
+SELECT c.first_name, c.last_name, COUNT(h.condition_id) AS total_illnesses
+FROM Children c 
+JOIN Health_Conditions h ON c.child_id = h.child_id
+GROUP BY c.child_id, c.first_name, c.last_name
+HAVING COUNT(h.condition_id) > 1;
+
+-- List all children that have severe illnesses
+SELECT c.firs_name, c.last_name, h.condition_name, h.severity_level
+FROM Children c
+JOIN Health_Conditions h ON c.child_id = h.child_id
+WHERE h.severity_level = 'severe'; 
+
+-- 
+
+
+
+
+
+
+
+
