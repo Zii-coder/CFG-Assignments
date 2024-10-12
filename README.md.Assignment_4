@@ -1,0 +1,76 @@
+Project Title: KS1 Student Progress API
+An API built using Flask and MySQL to track student progress for KS1 students.
+
+This KS1 Student Progress API was designed to simplify the process of tracking
+and managing the academic progress of KS1 students. It allows the user (teacher) to
+interact with student data, including retriving reports, adding progress updates, and viewing student
+performance against set targets.
+
+There are 3 API endpoints
+1. /api/students/working_on_target (Get a list of students currently working on target)
+2. /api/students/year1/above_target (Get a list of Year 1 students working above target)
+3. /api/students{student_id}/progress (Retrieve a specific students progress report by their ID
+
+Technology used
+- Flask , MySQL, Python, Git, Github, Insomnia
+
+ Set up : Python 3.7
+ Set up : MySQL server
+ Set up : pipenv or venv for a virtual environment
+
+ HOW TO SET UP :
+ - Clone the repository:
+ git clone (github repo link)
+ cd project-repo
+ python -m venv .venv
+ source .venv/bin/activate (make sure that the dashes are the opposite way for windows)
+ pip install -r requirments.txt
+
+ MySQL Database:
+ -set up database 'student_progress_db;
+ -run the SQL script to create tables
+ -To configure MySQL make sure to update this part of the code with your user info:
+ app = Flask(__name__)
+
+Input your MySQL details in the config.py file
+>   DB_HOST = 'localhost'
+    DB_USER = 'root'
+    DB_PASSWORD = 'my_password'
+    DB_NAME = 'student_progress_db'
+
+
+run the flask application
+
+Testing API
+ -you can use Insomnia or Postman
+ GET /api/students/working_on_target    - Retrieve a list of students currently working on target
+ GET /api/students/year1/above_target   - Retrieve a list of Year 1 students working above target
+ POST /aoi/students/{student_id}/progress  -Retrieve the progress report of a specific student by their ID
+
+What should come up when running api in insomnia :
+1st API : http://127.0.0.1:5000/api/students/working_on_target
+{
+	"num_students_working_on_target": 16
+}
+
+2nd API : http://127.0.0.1:5000/api/student/1
+[
+	{
+		"feedback": "Working above target",
+		"first_name": "Joshua",
+		"last_name": "Reid",
+		"report_date": "Sat, 13 Jul 2024 00:00:00 GMT",
+		"score": 74.0,
+		"subject": "Maths"
+	},
+
+3rd API :
+-set up body section in insomnia
+-select JSON
+-enter JSON data
+
+
+Error Handling:
+- If a student is not found the API returns 404 status ("message":"student not found")
+- For missing or incorrect data in POST requests, a '400 Bad Request' response will be returned, ensuring validation
+

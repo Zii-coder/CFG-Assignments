@@ -1,0 +1,16 @@
+Python 3.x
+Flask
+MySQL
+ blinker==1.8.2 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 1)) (1.8.2)
+ certifi==2024.8.30 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 2)) (2024.8.30)
+ charset-normalizer==3.3.2 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 3)) (3.3.2)
+ click==8.1.7 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 4)) (8.1.7)
+ Flask==3.0.3 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 5)) (3.0.3)
+ idna==3.9 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 6)) (3.9)
+ itsdangerous==2.2.0 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 7)) (2.2.0)
+ Jinja2==3.1.4 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 8)) (3.1.4)
+ MarkupSafe==3.0.1 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 9)) (3.0.1)
+ mysql-connector-python==9.0.0 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 10)) (9.0.0)
+ requests==2.32.3 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 11)) (2.32.3)
+ urllib3==2.2.3 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 12)) (2.2.3)
+ Werkzeug==3.0.4 in ./.venv/lib/python3.12/site-packages (from -r requirements.txt (line 13)) (3.0.4)
