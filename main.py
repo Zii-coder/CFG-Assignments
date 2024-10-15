@@ -67,6 +67,40 @@ def add_progress_report():
     connection.close()
     return jsonify({'message': 'Progress report added successfully!'}), 201
 
+# 4 Update student progress
+@app.route('/student/<int:student_id>/progress', methods=['PUT'])
+def update_student_progress(student_id):
+    data = request.get_json()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    query = """
+    UPDATE progress reports
+    SET progress = %s, target =%s
+    WHERE student_id = %s
+    """
+    cursor.execute(query, (data['progress'], data['target'], student_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Student progress updated successfully"})
+
+# 5. Remove a student that has left the school
+@app.route('/student/<int:student_id>', methods=['DELETE'])
+def delete_student(student_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # The code below deletes the student from the students table
+    cursor.execute("DELETE FROM progress_reports WHERE student_id =%s", (student_id))
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return jsonify({"message": "Student and progress report deleted successfully"})
+
 # main function to run the app
 if __name__ == '__main__':
     app.run(debug=True)
