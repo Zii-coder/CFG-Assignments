@@ -9,7 +9,11 @@ performance against set targets.
 There are 3 API endpoints
 1. /api/students/working_on_target (Get a list of students currently working on target)
 2. /api/students/year1/above_target (Get a list of Year 1 students working above target)
-3. /api/students{student_id}/progress (Retrieve a specific students progress report by their ID
+3. /api/students{student_id}/progress (Retrieve a specific students progress report by their ID)
+4. /student/<int:student_id>/progress (Enter student id to update a students progress)
+e.g you could put curl -X -H http://localhost:5000/student/1/progress
+5. /student/<int:student_id> (Enter student id to remove the student)
+e.g curl -X DELETE http://localhost:5000/students/1
 
 Technology used
 - Flask , MySQL, Python, Git, Github, Insomnia
