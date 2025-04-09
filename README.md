@@ -42,30 +42,6 @@ Me for the rest of the year <img src="https://github.com/user-attachments/assets
 <a href="https://www.theodinproject.com/">The Odin Project</a> 
 
   
-## Projects Overview
-
-| Project Name | Description                                  | Technologies Used               |
-|--------------|----------------------------------------------|---------------------------------|
-| Project 1    | Creating Github account and showing good use | Github , Pycharm                |
-| Project 2    |                                              |
-
-
-
-
-
-
-
-## Explanation of `.gitignore` and `requirements.txt`
-
-- **gitignore**: The git ignore file tells Git which files and directories to ignore in your repository. This is useful for excluding temporary files, build artifacts, and sensitive data.
-
-- **requirements.txt**:The requirements.txt file is used to list Python dependencies for a project. It allows others to install the same dependencies using pip.
-
-  ### PDF FILES OF EACH STEP OF THE ASSIGNMENT:
-  [CFGAssignment 1 images (Zenzi Ma) copy.pdf](https://github.com/user-attachments/files/16841294/CFGAssignment.1.images.Zenzi.Ma.copy.pdf)
-
-  [creating git.ignore and requirements (Zenzi Ma).pdf](https://github.com/user-attachments/files/16841299/creating.git.ignore.and.requirements.Zenzi.Ma.pdf)
-
 
 
 
